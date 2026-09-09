@@ -20,6 +20,14 @@ pipeline {
             }
         }
 
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    bat 'mvn sonar:sonar -Dsonar.projectKey=devops-java-cicd-project -Dsonar.projectName=devops-java-cicd-project'
+                }
+            }
+        }
+
         stage('Verify') {
             steps {
                 bat 'dir target'
