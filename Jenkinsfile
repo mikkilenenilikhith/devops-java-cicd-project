@@ -1,3 +1,4 @@
+```groovy
 pipeline {
     agent any
 
@@ -41,5 +42,12 @@ pipeline {
                 '''
             }
         }
+
+        stage('Docker Build') {
+            steps {
+                bat 'docker build -t devops-java-app:1.0 .'
+            }
+        }
     }
 }
+```
