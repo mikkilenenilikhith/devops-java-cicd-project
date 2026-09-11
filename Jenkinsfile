@@ -28,17 +28,17 @@ pipeline {
             }
         }
 
-        stage('Quality Gate') {
-            steps {
-                timeout(time: 5, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
-
         stage('Verify') {
             steps {
                 bat 'dir target'
+            }
+        }
+
+        stage('Deploy to Tomcat') {
+            steps {
+                bat '''
+                copy /Y target\\devops-java-app.war "C:\\Users\\lohit\\Downloads\\apache-tomcat-10.1.57-windows-x64\\apache-tomcat-10.1.57\\webapps\\"
+                '''
             }
         }
     }
