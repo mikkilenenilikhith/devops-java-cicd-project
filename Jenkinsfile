@@ -48,5 +48,15 @@ pipeline {
                 bat 'docker build -t devops-java-app:1.0 .'
             }
         }
+
+        stage('Docker Deploy') {
+            steps {
+                bat '''
+                docker stop devops-java-container || exit /b 0
+                docker rm devops-java-container || exit /b 0
+                docker run -d --name devops-java-container -p 8083:8080 devops-java-app:1.0
+                '''
+            }
+        }
     }
 }
